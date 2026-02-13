@@ -1,12 +1,22 @@
 body.horror {
-    background: black;
-    color: red;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background: radial-gradient(ellipse at 20% 20%, #2b0000 0%, #0b0000 35%, #000 100%);
+    color: #ff4d4d;
+    font-family: 'Cormorant Garamond', Cambria, Cochin, Georgia, 'Times New Roman', serif;
     transition: background 1.5s ease, color 1.5s ease;
+    background-attachment: fixed;
+}
+
+/* Subtle dark vignette for horror mode */
+body.horror::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    box-shadow: inset 0 0 160px rgba(0,0,0,0.85);
 }
 body.valentine {
-    background: pink;
-    color: white;
+    background: linear-gradient(135deg, #ff9ccf 0%, #ff5c8a 50%, #ff758c 100%);
+    color: #fff;
 }
 body {
     height: 100vh;
@@ -14,6 +24,7 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    position: relative;
 }
 
 .container {
@@ -46,9 +57,62 @@ body {
     transform: scale(1.1);
 }
 
+/* Horror button: inset shadow and dripping blood */
+.horror-btn {
+    box-shadow: inset 0 6px 18px rgba(0,0,0,0.7), 0 8px 20px rgba(0,0,0,0.6);
+    border-color: #8b0000;
+    color: #ff8b8b;
+}
+.horror-btn::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    width: 6px;
+    height: 10px;
+    background: linear-gradient(#ff2b2b, #7b0000);
+    border-radius: 6px;
+    transform: translateX(-50%) scaleY(0.6);
+    opacity: 0;
+    transition: opacity .2s ease;
+    animation: drip 3s infinite ease-in-out;
+}
+
+@keyframes drip {
+    0% { opacity: 0; transform: translateX(-50%) translateY(0) scaleY(0.6); }
+    55% { opacity: 1; transform: translateX(-50%) translateY(6px) scaleY(1); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(18px) scaleY(1); }
+}
+
+/* Valentine button */
+.valentine-btn {
+    border-radius: 12px;
+    padding: 14px 36px;
+    font-size: 20px;
+    background: linear-gradient(135deg,#ff6b9b 0%, #ff9ecf 100%);
+    color: #fff;
+    border: none;
+    box-shadow: 0 8px 22px rgba(255,107,155,0.28);
+    letter-spacing: 1px;
+    cursor: pointer;
+    position: relative;
+    transition: transform .25s ease, box-shadow .25s ease;
+    animation: pulse 3s ease-in-out infinite;
+}
+.valentine-btn:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 14px 34px rgba(255,107,155,0.36);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
 #text {
    margin-top: 20px;
-    font-size: 5vw; /* responsive font size */
+    font-size: 3vw; /* responsive font size */
     line-height: 1.6;
     white-space: pre-line;
     color: #fff;
@@ -61,6 +125,13 @@ body {
     background: red;
     transform: rotate(45deg);
     animation: float 6s linear infinite;
+}
+
+/* Valentine heart variant when body has .valentine */
+body.valentine .heart {
+    background: linear-gradient(135deg,#ff7aa2,#ffd1e0);
+    filter: drop-shadow(0 4px 8px rgba(255,122,162,0.15));
+    opacity: 0.95;
 }
 
 .heart::before,
@@ -91,5 +162,30 @@ body {
     to {
         bottom: 100%;
         opacity: 0;
+    }
+}
+
+/* Horror heart variant: darker, slower float */
+body.horror .heart {
+    background: linear-gradient(135deg,#7b0000,#2b0000);
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.8));
+    opacity: 0.95;
+    animation: float 9s linear infinite;
+}
+
+/* Slightly different text styling for horror mood */
+body.horror #text {
+    color: #ffb3b3;
+    text-shadow: 0 6px 18px rgba(75,0,0,0.6), 2px 2px 6px rgba(0,0,0,0.6);
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    .horror-btn, .valentine-btn {
+        padding: 12px 28px;
+        font-size: 18px;
+    }
+    #text {
+        font-size: 7vw;
     }
 }
