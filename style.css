@@ -1,0 +1,95 @@
+body.horror {
+    background: black;
+    color: red;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    transition: background 1.5s ease, color 1.5s ease;
+}
+body.valentine {
+    background: pink;
+    color: white;
+}
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    z-index: 10;
+}
+
+.horror-btn {
+    border-radius: 10px;
+    padding: 15px 40px;
+    font-size: 20px;
+    background: black;
+    color: red;
+    border: 2px solid red;
+    letter-spacing: 2px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.6s ease;
+    animation: flicker 1.5s infinite alternate;
+}
+
+/* Flicker effect */
+@keyframes flicker {
+    0% { box-shadow: 0 0 5px red; }
+    50% { box-shadow: 0 0 20px darkred; }
+    100% { box-shadow: 0 0 5px red; }
+}
+
+.horror-btn:hover {
+    transform: scale(1.1);
+}
+
+#text {
+   margin-top: 20px;
+    font-size: 5vw; /* responsive font size */
+    line-height: 1.6;
+    white-space: pre-line;
+    color: #fff;
+     text-shadow: 2px 2px 5px rgb(232, 223, 223);
+}
+.heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    transform: rotate(45deg);
+    animation: float 6s linear infinite;
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -10px;
+    left: 0;
+}
+
+.heart::after {
+    left: -10px;
+    top: 0;
+}
+
+@keyframes float {
+    from {
+        bottom: -20px;
+        opacity: 1;
+    }
+    to {
+        bottom: 100%;
+        opacity: 0;
+    }
+}
